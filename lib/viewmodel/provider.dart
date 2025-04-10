@@ -1,9 +1,54 @@
+import 'dart:developer';
+
+import 'package:flutter/widgets.dart';
 import 'package:supabase_crud/model/model.dart';
 import 'package:supabase_crud/service/service.dart';
 
-class StudentProvider{
-
+class StudentProvider extends ChangeNotifier{
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController agecontroller = TextEditingController();
+  TextEditingController classcontroller =  TextEditingController();
+  TextEditingController addresscontroller = TextEditingController();
 StudentService studentService = StudentService();
 List<StudentModel> studentlist =  [];
+
+
+
+Future<void>fetchStudents()async{
+  studentlist = await studentService.getAllStudent();
+  log('pro get datas ');
+  notifyListeners();
+}
+
+Future<void>addstudent()async{
+  try {
+     await studentService.addStudent(StudentModel(address: addresscontroller.text, age: agecontroller.text,  name:namecontroller.text));
+  log('added student in pro');
+  
+  } catch (e) {
+    log('failed add data pro : $e');
+  }
+  namecontroller.clear();
+  agecontroller.clear();
+  addresscontroller.clear();
+  fetchStudents();
+  notifyListeners();
+ 
+
+}
+
+Future<void>updateStudent(StudentModel updatedStudent,String id)async{
+await studentService.updateStudent(updatedStudent,id);
+log('updated student success');
+fetchStudents();
+notifyListeners();
+}
+
+Future <void>deleteStudent(String id)async{
+  await studentService.deleteStudent(id);
+  log('deleted student success');
+  fetchStudents();
+  notifyListeners();
+}
 
 }

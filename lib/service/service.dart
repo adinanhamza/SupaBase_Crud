@@ -11,6 +11,7 @@ final supabaseData = Supabase.instance.client.from('studenttable');
 
 Future <void>addStudent(StudentModel student)async{
   try {
+    log('student data : ${student.toString()}');
     await supabaseData.insert(student.toDataBase());
     log('added student data ');
   } catch (e) {

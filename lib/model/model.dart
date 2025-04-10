@@ -1,20 +1,20 @@
 class StudentModel{
 
-  String id;
+  String? id;
   String name;
   String age;
   String address;
-  String image;
+  // String image;
 
-  StudentModel({required this.address,required this.age,required this.id,required this.image,required this.name});
+  StudentModel({required this.address,required this.age, this.id,required this.name});
 
-  factory StudentModel.fromDataBase(Map<String,dynamic>json,){
+  factory StudentModel.fromDataBase(Map<String,dynamic>json){
 return StudentModel(
   id: json['id'],
   name: json['name'] ?? '',
   age: json['age'].toString() ,
   address: json['address'] ?? '',
-  image: json['image'] ?? '',
+  // image: json['image'] ?? '',
 
 
 );
@@ -26,7 +26,7 @@ return {
 'name' : name,
 'age' : age,
 'address' : address,
-'image' : image,
+// 'image' : image,
 };
 }
 }
