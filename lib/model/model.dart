@@ -1,16 +1,16 @@
 class StudentModel{
 
-  String? id;
+  String id;
   String name;
   String age;
   String address;
   String image;
 
-  StudentModel({required this.address,required this.age, this.id,required this.image,required this.name});
+  StudentModel({required this.address,required this.age,required this.id,required this.image,required this.name});
 
-  factory StudentModel.fromDataBase(Map<String,dynamic>json, String id){
+  factory StudentModel.fromDataBase(Map<String,dynamic>json,){
 return StudentModel(
-  id: id,
+  id: json['id'],
   name: json['name'] ?? '',
   age: json['age'].toString() ,
   address: json['address'] ?? '',
