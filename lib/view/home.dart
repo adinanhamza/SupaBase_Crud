@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_crud/view/add.dart';
@@ -37,16 +39,22 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=> Addstudent()));
           
           (context, index) {
             final data = value.studentlist[index];
+            final image = value.imageUrl;
         
             return ListTile(
-              tileColor: Colors.blueGrey[100],
+              tileColor: Colors.greenAccent[100],
         
+        leading: CircleAvatar(
+           backgroundImage: image == null && image!.isNotEmpty
+           ? FileImage(File(image))
+           : asset
+        ),
               title: Text(data.name,style: TextStyle(
               
               ),),
               subtitle: Text(data.age),
               trailing: IconButton(onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=> Profile(address: data.address, age: data.age,  name: data.name,id:data.id??'no',)));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=> Profile(address: data.address, age: data.age,  name: data.name,id:data.id??'no',image:image! ,)));
                 
               }, icon: Icon(Icons.forward)),
             

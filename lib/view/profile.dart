@@ -9,11 +9,12 @@ class Profile extends StatelessWidget {
   String name;
   String age;
   String address;
+  String image;
   Profile({
     super.key,
     required this.address,
     required this.age,
-   
+   required this.image,
     required this.name,
     required this.id,
   });
@@ -42,6 +43,7 @@ class Profile extends StatelessWidget {
                                     age: age,
                                     name: name,
                                     id: id,
+                                    image: image,
                         
                                   ),
                             ),
