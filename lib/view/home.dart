@@ -10,7 +10,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<StudentProvider>(context,listen: false).fetchStudents();
+    context.read<StudentProvider>().fetchStudents();
     return SafeArea(child: Scaffold(
       floatingActionButton: FloatingActionButton(onPressed: (){
 Navigator.push(context, MaterialPageRoute(builder: (context)=> Addstudent()));
@@ -37,7 +37,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=> Addstudent()));
           
           (context, index) {
             final data = value.studentlist[index];
-            final docid = data.id;
+        
             return ListTile(
               tileColor: Colors.blueGrey[100],
         

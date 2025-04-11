@@ -7,7 +7,6 @@ import 'package:supabase_crud/service/service.dart';
 class StudentProvider extends ChangeNotifier{
   TextEditingController namecontroller = TextEditingController();
   TextEditingController agecontroller = TextEditingController();
-  TextEditingController classcontroller =  TextEditingController();
   TextEditingController addresscontroller = TextEditingController();
 StudentService studentService = StudentService();
 List<StudentModel> studentlist =  [];
@@ -15,8 +14,8 @@ List<StudentModel> studentlist =  [];
 
 
 Future<void>fetchStudents()async{
+    log('pro get datas ');
   studentlist = await studentService.getAllStudent();
-  log('pro get datas ');
   notifyListeners();
 }
 
