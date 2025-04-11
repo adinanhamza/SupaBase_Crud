@@ -1,4 +1,5 @@
 
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -39,15 +40,17 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=> Addstudent()));
           
           (context, index) {
             final data = value.studentlist[index];
-            final image = value.imageUrl;
+            
+            final image = data.image;
+            log('image : $image');
         
             return ListTile(
               tileColor: Colors.greenAccent[100],
         
         leading: CircleAvatar(
-           backgroundImage: image == null && image!.isNotEmpty
-           ? FileImage(File(image))
-           : asset
+           backgroundImage: image != null && image.isNotEmpty
+           ? NetworkImage(image)
+           : AssetImage('assets/avatar2.jpg')
         ),
               title: Text(data.name,style: TextStyle(
               
