@@ -66,6 +66,9 @@ class _AddstudentState extends State<Addstudent> {
                           onPressed: ()async{
                       
                final file = await     Imageservice().pickImage();  
+              if(file != null){
+                selectedImage = file;
+              }
                if(file != null){
                 final url = await Imageservice().uploadImageToDataBase(file);
                 if(url != null){
@@ -117,7 +120,7 @@ class _AddstudentState extends State<Addstudent> {
               Consumer<StudentProvider>(
                 builder: (context, value, child) => 
                  ElevatedButton(onPressed: (){
-                  
+
                   value.addstudent();
                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('data added successfully')));
                Navigator.pop(context);
@@ -137,7 +140,7 @@ class _AddstudentState extends State<Addstudent> {
     if (returnImage == null) return;
 
     setState(() {
-      // selectedImage = File(returnImage.path); 
+      selectedImage = File(returnImage.path); 
     });
     
   }

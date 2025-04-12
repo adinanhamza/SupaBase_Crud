@@ -24,7 +24,7 @@ Future<List<StudentModel>> getAllStudent()async{
 try {
   final response = await supabaseData.select('*') as List<dynamic>;
   log('response from data : ${response.toString()}');
-  return response.map((res)=> StudentModel.fromDataBase(res)).toList();
+  return  response.map((res)=> StudentModel.fromDataBase(res)).toList();
 } catch (e) {
   throw Exception('error in get student : $e');
 }

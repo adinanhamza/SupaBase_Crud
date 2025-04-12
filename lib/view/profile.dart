@@ -74,6 +74,14 @@ class Profile extends StatelessWidget {
         body: Center(
           child: Column(
             children: [
+
+              CircleAvatar(
+                radius: 80,
+           backgroundImage: image != null && image.isNotEmpty
+           ? NetworkImage(image)
+           : AssetImage('assets/avatar2.jpg')
+        ),
+              SizedBox(height: 20,),
               Text('name : ${name}'),
               SizedBox(height: 10),
               Text('age : ${age}'),
