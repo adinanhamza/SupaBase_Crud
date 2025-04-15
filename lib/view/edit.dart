@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_crud/model/model.dart';
 import 'package:supabase_crud/service/imageservice.dart';
@@ -31,15 +32,18 @@ class Update extends StatefulWidget {
 
 class _UpdateState extends State<Update> {
   File? selectedImage;
+NetworkImage? netImage;
   TextEditingController namecontroller = TextEditingController();
   TextEditingController agecontroller = TextEditingController();
-
   TextEditingController addresscontroller = TextEditingController();
+  
   @override
   void initState() {
     namecontroller = TextEditingController(text: widget.name);
     agecontroller = TextEditingController(text: widget.age);
-    selectedImage = File(widget.image);
+    // selectedImage = File(widget.imag\
+    //e );
+netImage = NetworkImage(widget.image);
     addresscontroller = TextEditingController(text: widget.address);
 
     super.initState();
@@ -47,7 +51,10 @@ class _UpdateState extends State<Update> {
 
   @override
   Widget build(BuildContext context) {
-    log('image for update : ${widget.image}');
+    log('image for update : ${widget.image}'  ?? 'null');
+    log("selected images as : $selectedImage");
+    log('edit image : ${context.read<StudentProvider>().imageUrl}');
+  // NetworkImage editImage =   context.read<StudentProvider>().imageUrl;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(),
@@ -59,9 +66,13 @@ class _UpdateState extends State<Update> {
                 radius: 50,
                 backgroundColor: const Color.fromARGB(255, 229, 202, 154),
                 backgroundImage:
-                    selectedImage != null ? FileImage(selectedImage!) : null,
+                    selectedImage != null ? 
+                    
+                  NetworkImage(context.read<StudentProvider>().imageUrl ?? 'null')
+                    
+                     : NetworkImage(widget.image),
                 child:
-                    selectedImage == null
+                    selectedImage == null && netImage == null
                         ? Padding(
                           padding: EdgeInsets.all(9),
                           child: Icon(
@@ -83,10 +94,18 @@ class _UpdateState extends State<Update> {
                 onPressed: () async {
                   final file = await Imageservice().pickImage();
 
+                  if(file != null){
+                    setState(() {
+                         selectedImage = file;
+                    });
+                 
+                  }
+
                   if (file != null) {
                     final url = await Imageservice().uploadImageToDataBase(
                       file,
                     );
+                    
                     if (url != null) {
                       context.read<StudentProvider>().setImageUrl(url);
                       log('image url set in provider $url');
@@ -149,7 +168,7 @@ class _UpdateState extends State<Update> {
                           StudentModel(
                             address: addresscontroller.text,
                             name: namecontroller.text,
-                            image: selectedImage?.path ?? '',
+                            image: context.read<StudentProvider>().imageUrl ?? widget.image,
                             age: agecontroller.text,
                           ),
                           widget.id,
